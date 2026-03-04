@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* RAMIRO CHEN - Cinematic Portfolio */
+
+/* Hide Next.js dev indicator */
+html > body > div:first-child > div:first-child,
+nextjs-portal-root,
+div[style*="position: fixed"][style*="bottom: 0"][style*="left: 0"],
+div[style*="z-index: 9999"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Also target the built-in indicator */
+[data-nextjs-scroll-indicator],
+[data-nextjs-terminal] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: oklch(0.50 0.10 145 / 0.25);
+  color: inherit;
+}
+
+/* Hide scrollbar */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 1px solid oklch(0.50 0.10 145 / 0.6);
+  outline-offset: 2px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
