@@ -89,28 +89,33 @@ export default function PortfolioPage() {
     el.scrollTo({ top: p * (el.scrollHeight - el.clientHeight), behavior: 'auto' });
   };
 
-  if (portal) return <PortalView timer={timer} onExit={() => { setPortal(false); setTimer(DEFAULT_TIMER_SECONDS); }} />;
-
   return (
-    <div ref={containerRef} className="relative h-screen overflow-y-auto overflow-x-hidden bg-[oklch(0.16_0.01_145)]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-      <FilmGrainOverlay />
-      <FrequencyScrollbar mounted={mounted} freqState={freqState} onScrollTo={scrollTo} />
-      <NavigationHeader containerRef={containerRef} />
-      <AtmosphericEffects />
-      
-      <main className="relative z-30 pr-16 lg:pr-20">
-        <HeroSection />
-        <ProjectsSection onHoverProject={setHoveredProject} />
-        <ExperienceSection />
-        <BioSection />
-        <EnvironmentGallery />
-        <ContactSection />
-        <SiteFooter />
-      </main>
+    <>
+      <div 
+        ref={containerRef} 
+        className={portal ? 'hidden' : 'relative h-screen overflow-y-auto overflow-x-hidden bg-[oklch(0.16_0.01_145)]'}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        <FilmGrainOverlay />
+        <FrequencyScrollbar mounted={mounted} freqState={freqState} onScrollTo={scrollTo} />
+        <NavigationHeader containerRef={containerRef} />
+        <AtmosphericEffects />
+        
+        <main className="relative z-30 pr-16 lg:pr-20">
+          <HeroSection />
+          <ProjectsSection onHoverProject={setHoveredProject} />
+          <ExperienceSection />
+          <BioSection />
+          <EnvironmentGallery />
+          <ContactSection />
+          <SiteFooter />
+        </main>
 
-      <ProjectHoverImages projects={projects} hoveredProject={hoveredProject} />
-      <PortalButton onClick={() => setPortal(true)} />
-    </div>
+        <ProjectHoverImages projects={projects} hoveredProject={hoveredProject} />
+        <PortalButton onClick={() => setPortal(true)} />
+      </div>
+      {portal && <PortalView timer={timer} onExit={() => { setPortal(false); setTimer(DEFAULT_TIMER_SECONDS); }} />}
+    </>
   );
 }
 
