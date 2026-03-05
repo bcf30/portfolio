@@ -169,7 +169,7 @@ function FrequencyScrollbar({ mounted, freqState, onScrollTo }: { mounted: boole
 function NavigationHeader({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) {
   const navItems = [
     { href: "#", label: "home", primary: false },
-    { href: "#projects", label: "projects", primary: false },
+    { href: "#projects", label: "projects + experience", primary: false },
     { href: "#bio", label: "bio", primary: false },
     { href: "#contact", label: "contact", primary: true },
   ];
@@ -215,6 +215,7 @@ function HeroSection() {
       <div className="absolute inset-0 -z-10" style={{ background: "linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))" }} />
       <motion.div className="text-center max-w-2xl relative z-10" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}>
         <h1 className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">Ramiro Chen</h1>
+        <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">...'s Portfolio</p>
       </motion.div>
     </section>
   );
@@ -260,14 +261,14 @@ function ExperienceSection() {
   const exp = experiences[0];
   // Position it centered with slight rotation
   const rotation = 2;
-  const offset = { x: 'calc(50% - 100px)', y: '0' };
+  const offset = { x: 'calc(50% - 160px)', y: '0' };
 
   return (
     <section id="experience" className="relative py-24 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="relative flex justify-center" style={{ minHeight: '200px' }}>
+        <div className="relative flex justify-center" style={{ minHeight: '250px' }}>
           <div 
-            className="w-64 md:w-72 p-4 bg-[oklch(0.16_0.01_180/0.7)] backdrop-blur-[1px] shadow-[0_0_25px_oklch(0.30_0.06_180/0.25)] hover:shadow-[0_0_35px_oklch(0.40_0.08_180/0.35)] hover:scale-[1.05] transition-all duration-200 cursor-default border border-[oklch(0.30_0.04_180/0.3)]"
+            className="w-80 md:w-96 p-5 bg-[oklch(0.16_0.01_180/0.7)] backdrop-blur-[1px] shadow-[0_0_25px_oklch(0.30_0.06_180/0.25)] hover:shadow-[0_0_35px_oklch(0.40_0.08_180/0.35)] hover:scale-[1.05] transition-all duration-200 cursor-default border border-[oklch(0.30_0.04_180/0.3)]"
             style={{ 
               clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
               left: offset.x,
@@ -275,14 +276,14 @@ function ExperienceSection() {
               transform: `rotate(${rotation}deg)`
             }}
           >
-            <div className="flex items-baseline justify-between mb-1">
-              <Briefcase className="w-3.5 h-3.5 text-[oklch(0.40_0.04_180)]" />
-              <h3 className="font-[family-name:var(--font-cormorant)] text-lg text-[oklch(0.80_0.02_180)]">{exp.position}</h3>
+            <div className="flex items-baseline mb-1">
+              <h3 className="font-[family-name:var(--font-cormorant)] text-xl text-[oklch(0.80_0.02_180)]">{exp.position}</h3>
+              <Briefcase className="w-4 h-4 text-[oklch(0.40_0.04_180)] ml-auto" />
             </div>
-            <p className="text-xs text-[oklch(0.50_0.04_180)] font-semibold">{exp.company}</p>
-            <p className="text-[10px] text-[oklch(0.35_0.04_180)] mt-1 font-mono">{exp.period}</p>
-            <p className="text-xs text-[oklch(0.50_0.04_180)] mt-2">{exp.description}</p>
-            <p className="text-[10px] text-[oklch(0.35_0.04_180)] mt-2 font-mono">{exp.tech}</p>
+            <p className="text-sm text-[oklch(0.50_0.04_180)] font-semibold">{exp.company}</p>
+            <p className="text-xs text-[oklch(0.35_0.04_180)] mt-1 font-mono">{exp.period}</p>
+            <p className="text-sm text-[oklch(0.50_0.04_180)] mt-4">{exp.description}</p>
+            <p className="text-xs text-[oklch(0.35_0.04_180)] mt-2 font-mono">{exp.tech}</p>
           </div>
         </div>
       </div>
