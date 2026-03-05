@@ -186,7 +186,6 @@ function AtmosphericEffects() {
       <div className="fixed inset-0 pointer-events-none z-0">
         <motion.div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 120% 80% at 20% 100%, oklch(0.25 0.08 145 / 0.12), transparent), radial-gradient(ellipse 80% 60% at 80% 20%, oklch(0.30 0.06 180 / 0.08), transparent)" }} animate={{ opacity: [0.4, 0.55, 0.4] }} transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }} />
       </div>
-      <div className="fixed inset-0 pointer-events-none z-10 opacity-[0.03]" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1200)", backgroundSize: 'cover', mixBlendMode: 'overlay' }} />
     </>
   );
 }
@@ -194,7 +193,7 @@ function AtmosphericEffects() {
 function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center relative px-6">
-      <div className="absolute inset-0 -z-10" style={{ backgroundImage: "linear-gradient(to bottom, transparent, oklch(0.16 0.01 145)), url(https://images.unsplash.com/photo-1518173946687-a4c036bc3c44?w=500)", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.18 }} />
+      <div className="absolute inset-0 -z-10" style={{ background: "linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))" }} />
       <motion.div className="text-center max-w-2xl relative z-10" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}>
         <h1 className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">Ramiro Chen</h1>
       </motion.div>
