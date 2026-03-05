@@ -8,6 +8,11 @@ out/
 # Build output
 dist/
 build/
+docs/
+
+# Package manager locks (using npm)
+bun.lock
+bun.lockb
 
 # Environment
 .env

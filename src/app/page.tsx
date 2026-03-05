@@ -2,7 +2,7 @@
 
 import { motion, useScroll } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { Github } from "lucide-react";
+import { Github, Briefcase } from "lucide-react";
 
 import { projects, environmentImageIds, type Project } from "../Models/ProjectViewModel";
 import { getDbAtFreq, formatFrequency, formatTime, freqToProgress, LOG_20, LOG_RANGE, PADDING_ZONE, calculateFrequencyPath, calculateDotX } from "../Services/FrequencyResponse";
@@ -10,6 +10,24 @@ import { getDbAtFreq, formatFrequency, formatTime, freqToProgress, LOG_20, LOG_R
 // Constants
 const FREQUENCY_LABELS = [20, 100, 500, 1000, 3000, 10000, 20000];
 const DEFAULT_TIMER_SECONDS = 900;
+
+// Experience data
+interface Experience {
+  position: string;
+  company: string;
+  period: string;
+  description: string;
+  tech: string;
+}
+const experiences: Experience[] = [
+  {
+    position: "Junior Software Developer",
+    company: "taq Automotive Intelligence",
+    period: "January 2026 — Present",
+    description: "Developing software solutions for automotive lenders and dealers.",
+    tech: ".NET, C#, MSSQL, JS"
+  }
+];
 
 interface FrequencyState {
   progress: number;
@@ -74,6 +92,7 @@ export default function PortfolioPage() {
       <main className="relative z-30 pr-16 lg:pr-20">
         <HeroSection />
         <ProjectsSection onHoverProject={setHoveredProject} />
+        <ExperienceSection />
         <BioSection />
         <EnvironmentGallery />
         <ContactSection />
@@ -230,6 +249,41 @@ function ProjectsSection({ onHoverProject }: { onHoverProject: (name: string | n
               </div>
             </a>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  // Single experience, similar styling but with teal/blue color scheme
+  const exp = experiences[0];
+  // Position it centered with slight rotation
+  const rotation = 2;
+  const offset = { x: 'calc(50% - 100px)', y: '0' };
+
+  return (
+    <section id="experience" className="relative py-24 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="relative flex justify-center" style={{ minHeight: '200px' }}>
+          <div 
+            className="w-64 md:w-72 p-4 bg-[oklch(0.16_0.01_180/0.7)] backdrop-blur-[1px] shadow-[0_0_25px_oklch(0.30_0.06_180/0.25)] hover:shadow-[0_0_35px_oklch(0.40_0.08_180/0.35)] hover:scale-[1.05] transition-all duration-200 cursor-default border border-[oklch(0.30_0.04_180/0.3)]"
+            style={{ 
+              clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
+              left: offset.x,
+              top: offset.y,
+              transform: `rotate(${rotation}deg)`
+            }}
+          >
+            <div className="flex items-baseline justify-between mb-1">
+              <Briefcase className="w-3.5 h-3.5 text-[oklch(0.40_0.04_180)]" />
+              <h3 className="font-[family-name:var(--font-cormorant)] text-lg text-[oklch(0.80_0.02_180)]">{exp.position}</h3>
+            </div>
+            <p className="text-xs text-[oklch(0.50_0.04_180)] font-semibold">{exp.company}</p>
+            <p className="text-[10px] text-[oklch(0.35_0.04_180)] mt-1 font-mono">{exp.period}</p>
+            <p className="text-xs text-[oklch(0.50_0.04_180)] mt-2">{exp.description}</p>
+            <p className="text-[10px] text-[oklch(0.35_0.04_180)] mt-2 font-mono">{exp.tech}</p>
+          </div>
         </div>
       </div>
     </section>
