@@ -32,15 +32,10 @@ export const metadata: Metadata = {
     "IEM",
     "frequency response",
     "film studies",
-    "social justice",
-    "FOSS",
-    "Street Fighter",
     "Counter-Strike"
   ],
   authors: [{ name: "Ramiro Chen" }],
-  icons: {
-    icon: "/logo.svg",
-  },
+
   openGraph: {
     title: "Ramiro Chen | Portfolio",
     description: "Ramiro Chen's portfolio. Inspired by several filmmakers I look fondly to",
@@ -49,7 +44,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ramiro Chen",
-    description: "A portfolio in slow motion",
+    description: "Ramiro Chen's portfolio",
   },
 };
 
