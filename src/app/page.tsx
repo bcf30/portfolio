@@ -73,6 +73,15 @@ export default function PortfolioPage() {
     return () => clearInterval(interval);
   }, [portal, timer]);
 
+  // Reset scroll position and frequency state when returning from portal
+  useEffect(() => {
+    if (!portal && containerRef.current) {
+      containerRef.current.scrollTo({ top: 0, behavior: 'auto' });
+      // Manually reset freqState to initial position
+      setFreqState({ progress: 0, frequency: 0, db: -4 });
+    }
+  }, [portal]);
+
   // Scroll to position handler
   const scrollTo = (p: number) => {
     const el = containerRef.current;
