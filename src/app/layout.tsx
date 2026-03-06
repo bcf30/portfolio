@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Crimson_Text } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 /* Display font - elegant, editorial */
 const cormorant = Cormorant_Garamond({
