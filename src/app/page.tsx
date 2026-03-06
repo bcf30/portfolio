@@ -21,11 +21,11 @@ interface Experience {
 }
 const experiences: Experience[] = [
   {
-    position: "Junior Software Developer",
+    position: "Junior Software Developer, Co-op",
     company: "taq Automotive Intelligence",
     period: "January 2026 — Present",
     description: "Developing software solutions for automotive lenders and dealers.",
-    tech: ".NET, C#, MSSQL, JS"
+    tech: ".NET, C#, SQL, JS"
   }
 ];
 
@@ -381,7 +381,7 @@ function ContactSection() {
         <div className="flex justify-center gap-4 relative z-10">
           <a href="mailto:ramiro.chen@outlook.com" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">email</a>
           <a href="https://github.com/bcf30" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">github</a>
-          <a href="https://drive.google.com/file/d/1OW5yWg6JSgzFZ0F7J549MP7j-DxUaw01/view?usp=sharing" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">resume</a>
+          <a href="https://docs.google.com/document/d/1C5982snG7InL7BCPCAjiM3a6hkCh70tNxLJtP0ChuPE/edit?usp=sharing" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">resume</a>
         </div>
       </div>
     </section>
