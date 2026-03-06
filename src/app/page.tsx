@@ -353,9 +353,12 @@ function EnvironmentGallery() {
           <div className="text-left">
             <motion.p className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] italic mb-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>Some of the many things I love.</motion.p>
             <motion.ul className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] list-none pl-0" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+              <li>- film</li>
+              <li>- audio</li>
               <li>- ML</li>
               <li>- data compression</li>
               <li>- environment</li>
+              <li>- the sciences</li>
               <li>- triathlon</li>
               <li>- and more...</li>
             </motion.ul>
