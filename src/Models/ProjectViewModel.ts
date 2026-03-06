@@ -42,7 +42,7 @@ export const projects: Project[] = [
     tech: "Selenium", 
     img: "/images/Screenshot 2026-03-04 144838.avif", 
     imgPos: { top: "15%", left: "5%" },
-    imgSize: { width: "320px", height: "auto" }
+    imgSize: { width: "380px", height: "auto" }
   },
   { 
     name: "trans-writes", 
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     tech: "Tkinter, Pillow, scikit-image", 
     img: "/images/Screenshot 2026-02-24 202456.avif", 
     imgPos: { top: "25%", right: "8%" },
-    imgSize: { width: "280px", height: "auto" },
+    imgSize: { width: "320px", height: "auto" },
     textAlign: "right"
   },
   { 
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     tech: ".NET 8, C#", 
     img: "/images/Screenshot 2026-03-04 145243.avif", 
     imgPos: { bottom: "20%", right: "15%" },
-    imgSize: { width: "260px", height: "auto" },
+    imgSize: { width: "320px", height: "auto" },
     textAlign: "right"
   },
 ];
