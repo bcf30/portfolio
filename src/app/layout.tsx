@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     title: "Ramiro Chen",
     description: "Ramiro Chen's portfolio",
   },
+  icons: {
+    icon: "/images/icon/buffalofav.png",
+  },
 };
 
 export default function RootLayout({
