@@ -189,9 +189,14 @@ function NavigationHeader({ containerRef }: { containerRef: React.RefObject<HTML
   ];
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
-    e.preventDefault();
-    if (target === "#") containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-    else document.getElementById(target.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+    if (target.startsWith("#") || target === "") {
+      e.preventDefault();
+      if (target === "#") {
+        containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById(target.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (
@@ -376,7 +381,7 @@ function ContactSection() {
         <div className="flex justify-center gap-4 relative z-10">
           <a href="mailto:ramiro.chen@outlook.com" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">email</a>
           <a href="https://github.com/bcf30" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">github</a>
-          <a href="/pdf/Ramiro_Chen New Resume.pdf" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">resume</a>
+          <a href="https://drive.google.com/file/d/1xpYDf9mMrlHTaaq3J-vlxG2m_KpCQmcW/view?usp=sharing" target="_blank" rel="noopener noreferrer" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">resume</a>
         </div>
       </div>
     </section>
