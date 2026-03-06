@@ -96,7 +96,7 @@ export const frequencyResponseData: FrequencyDataPoint[] = [
  * Unsplash image IDs for environmental imagery
  */
 export const environmentImageIds: { src: string; sizeClass: string }[] = [
-  { src: "/images/grid/uncle-boonmee-who-can-recall-his-past-lives-md-web.jpg", sizeClass: "w-36 md:w-40" },
+  { src: "/images/grid/uncle-boonmee-who-can-recall-his-past-lives-md-web.avif", sizeClass: "w-36 md:w-40" },
   { src: "/images/grid/7850650c-8459-4325-8a3c-b05b2209aeaa1.avif", sizeClass: "w-28 md:w-32" },
   { src: "/images/grid/esports-full-edition.avif", sizeClass: "w-36 md:w-40" },
   { src: "/images/grid/synecdoche.avif", sizeClass: "w-44 md:w-52" },
