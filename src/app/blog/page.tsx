@@ -56,7 +56,7 @@ export default async function BlogPage() {
                   </Link>
                 </h2>
                 <p className="text-xs text-[oklch(0.35_0.04_145)] font-mono mb-3">
-                  {new Date(post.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                  {new Date(post.created_at).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Toronto' })}
                 </p>
                 {post.excerpt && <p className="text-[oklch(0.55_0.04_145)] mb-4">{post.excerpt}</p>}
                 <Link href={`/blog/${post.slug}`} style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.75 0.03 145)' }} className="inline-block px-3 py-1 border text-xs font-mono hover:opacity-80 transition-all">

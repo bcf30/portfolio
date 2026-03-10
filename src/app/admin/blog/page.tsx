@@ -284,7 +284,7 @@ export default function AdminBlogPage() {
                     <div>
                       <h3 className="font-[family-name:var(--font-cormorant)] text-lg text-[oklch(0.80_0.02_145)]">{post.title}</h3>
                       <p className="text-xs text-[oklch(0.35_0.04_145)] font-mono mt-1">
-                        {new Date(post.created_at).toLocaleDateString()} {post.updated_at && `(updated: ${new Date(post.updated_at).toLocaleDateString()})`}
+                        {new Date(post.created_at).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })} {post.updated_at && `(updated: ${new Date(post.updated_at).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' })})`}
                       </p>
                       {post.excerpt && <p className="text-sm text-[oklch(0.55_0.04_145)] mt-2">{post.excerpt}</p>}
                     </div>

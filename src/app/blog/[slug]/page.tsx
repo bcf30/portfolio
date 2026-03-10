@@ -56,8 +56,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <article>
           <h1 className="font-[family-name:var(--font-cormorant)] text-4xl text-[oklch(0.80_0.02_145)] mb-4">{post.title}</h1>
           <p className="text-xs text-[oklch(0.35_0.04_145)] font-mono mb-6">
-            {new Date(post.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-            {post.updated_at && ` (updated: ${new Date(post.updated_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })})`}
+            {new Date(post.created_at).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Toronto' })}
+            {post.updated_at && ` (updated: ${new Date(post.updated_at).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Toronto' })})`}
           </p>
           {post.cover_image && (
             <img src={post.cover_image} alt="" className="w-full h-auto object-contain mb-8 border border-[oklch(0.30_0.04_145/0.3)]" />
