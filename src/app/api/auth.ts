@@ -3,17 +3,24 @@ import { timingSafeEqual, scryptSync } from 'crypto';
 export function verifyPassword(providedPassword: string | null): boolean {
   if (!providedPassword) return false;
   
-  const hashStr = process.env.ADMIN_PASSWORD_HASH;
+  // Check for the hash string in environment
+  const hashStr = process.env.ADMIN_PASSWORD_HASH || process.env.ADMIN_PASSWORD;
+  
   if (!hashStr) {
-    // Fallback for development if no hash is provided but ADMIN_PASSWORD is (the old way)
-    const plain = process.env.ADMIN_PASSWORD;
-    if (plain && providedPassword === plain) return true;
     return false;
   }
 
+  // Handle common mistake if the variable name includes "ADMIN_PASSWORD_HASH="
+  const cleanHash = hashStr.startsWith("ADMIN_PASSWORD_HASH=") 
+    ? hashStr.replace("ADMIN_PASSWORD_HASH=", "") 
+    : hashStr;
+
   // Expecting format: salt:hash
-  const parts = hashStr.split(':');
-  if (parts.length !== 2) return false;
+  const parts = cleanHash.split(':');
+  if (parts.length !== 2) {
+    // Fallback for development if no colons (plain-text check)
+    return providedPassword === cleanHash;
+  }
 
   const [salt, key] = parts;
   

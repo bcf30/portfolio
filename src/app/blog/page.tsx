@@ -3,6 +3,11 @@ import Link from "next/link";
 import { sql } from "@vercel/postgres";
 import { unstable_cache } from "next/cache";
 
+// Ensure POSTGRES_URL is set for @vercel/postgres from DATABASE_URL if missing
+if (!process.env.POSTGRES_URL && process.env.DATABASE_URL) {
+  process.env.POSTGRES_URL = process.env.DATABASE_URL;
+}
+
 // Fetch all posts using unstable_cache for Next.js 15+
 const getPosts = unstable_cache(
   async () => {
@@ -37,14 +42,14 @@ export default async function BlogPage() {
           <div className="space-y-8">
             {posts.map((post: any) => (
               <article key={post.slug} className="border border-[oklch(0.30_0.04_145/0.5)] bg-[oklch(0.14_0.01_145/0.6)] p-6">
-                {post.cover_image && (
-                  <img 
-                    src={post.cover_image} 
-                    alt={`Cover image for ${post.title}`}
-                    className="w-full h-48 object-cover mb-4 border border-[oklch(0.30_0.04_145/0.3)]" 
-                    loading="lazy"
-                  />
-                )}
+                  {post.cover_image && (
+                    <img 
+                      src={post.cover_image} 
+                      alt={`Cover image for ${post.title}`}
+                      className="w-full h-auto object-contain mb-4 border border-[oklch(0.30_0.04_145/0.3)]" 
+                      loading="lazy"
+                    />
+                  )}
                 <h2 className="font-[family-name:var(--font-cormorant)] text-2xl text-[oklch(0.80_0.02_145)] mb-2">
                   <Link href={`/blog/${post.slug}`} className="hover:underline">
                     {post.title}
