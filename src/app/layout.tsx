@@ -60,6 +60,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Preconnect to Google Fonts for better performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
         <style dangerouslySetInnerHTML={{ __html: `
           html, body { background: oklch(0.16 0.01 145) !important; }
           * { scrollbar-width: none !important; }

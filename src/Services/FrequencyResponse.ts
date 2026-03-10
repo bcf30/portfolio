@@ -20,20 +20,40 @@ export const LOG_RANGE = LOG_20K - LOG_20;
 export const PADDING_ZONE = 0.05;
 
 /**
- * Get the dB value at a specific frequency using linear interpolation
+ * Get the dB value at a specific frequency using optimized linear interpolation
  * @param f - Frequency in Hz
  */
 export function getDbAtFreq(f: number): number {
   if (f <= 20) return frequencyResponseData[0].db;
   if (f >= 20000) return frequencyResponseData[frequencyResponseData.length - 1].db;
   
-  for (let i = 0; i < frequencyResponseData.length - 1; i++) {
+  // For small dataset (35 points), optimized linear search is faster
+  // Start from a reasonable position based on logarithmic scale
+  const logF = Math.log10(f);
+  const startIdx = Math.max(0, Math.min(
+    frequencyResponseData.length - 2,
+    Math.floor((logF - LOG_20) / LOG_RANGE * frequencyResponseData.length)
+  ));
+  
+  // Search forward from estimated position
+  for (let i = startIdx; i < frequencyResponseData.length - 1; i++) {
     if (f >= frequencyResponseData[i].freq && f <= frequencyResponseData[i + 1].freq) {
-      const t = (Math.log10(f) - Math.log10(frequencyResponseData[i].freq)) / 
+      // Perform logarithmic interpolation
+      const t = (logF - Math.log10(frequencyResponseData[i].freq)) / 
                 (Math.log10(frequencyResponseData[i + 1].freq) - Math.log10(frequencyResponseData[i].freq));
       return frequencyResponseData[i].db + t * (frequencyResponseData[i + 1].db - frequencyResponseData[i].db);
     }
   }
+  
+  // Fallback: search from beginning
+  for (let i = 0; i < frequencyResponseData.length - 1; i++) {
+    if (f >= frequencyResponseData[i].freq && f <= frequencyResponseData[i + 1].freq) {
+      const t = (logF - Math.log10(frequencyResponseData[i].freq)) / 
+                (Math.log10(frequencyResponseData[i + 1].freq) - Math.log10(frequencyResponseData[i].freq));
+      return frequencyResponseData[i].db + t * (frequencyResponseData[i + 1].db - frequencyResponseData[i].db);
+    }
+  }
+  
   return frequencyResponseData[0].db;
 }
 

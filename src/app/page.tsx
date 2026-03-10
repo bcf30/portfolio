@@ -82,6 +82,19 @@ export default function PortfolioPage() {
     }
   }, [portal]);
 
+  // Scroll to hash on initial load if present
+  useEffect(() => {
+    if (window.location.hash && containerRef.current) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          containerRef.current?.scrollTo({ top: element.offsetTop, behavior: 'auto' });
+        }, 100);
+      }
+    }
+  }, []);
+
   // Scroll to position handler
   const scrollTo = (p: number) => {
     const el = containerRef.current;
@@ -106,7 +119,8 @@ export default function PortfolioPage() {
           <ProjectsSection onHoverProject={setHoveredProject} />
           <ExperienceSection />
           <BioSection />
-          <EnvironmentGallery />
+          <InterestGallery />
+          <BlogPreview />
           <ContactSection />
           <SiteFooter />
         </main>
@@ -132,7 +146,11 @@ function PortalView({ timer, onExit }: { timer: number; onExit: () => void }) {
     <div className="min-h-screen bg-[oklch(0.08_0.01_55)] flex flex-col relative overflow-hidden">
       <NoiseOverlay />
       <BackgroundImage url="/images/turnpike.avif" />
-      <button onClick={onExit} className="fixed top-4 left-4 z-50 px-3 py-1.5 border border-[oklch(0.50_0.04_145)] text-[oklch(0.75_0.03_145)] text-xs font-mono hover:bg-[oklch(0.25_0.06_145)] transition-all">exit</button>
+      <header className="absolute top-0 left-0 z-50 p-3">
+        <button onClick={onExit} style={{ borderColor: 'oklch(0.50 0.04 145)', color: 'oklch(0.75 0.03 145)' }} className="px-3 py-1.5 border text-xs font-mono hover:opacity-80 transition-all bg-[oklch(0.16_0.01_145)]">
+          &larr; home
+        </button>
+      </header>
       <div className="flex-1 flex items-center justify-center p-8 relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="max-w-xl text-center">
           <div className="my-8">
@@ -182,22 +200,31 @@ function FrequencyScrollbar({ mounted, freqState, onScrollTo }: { mounted: boole
 // Navigation header
 function NavigationHeader({ containerRef }: { containerRef: React.RefObject<HTMLDivElement | null> }) {
   const navItems = [
-    { href: "#", label: "home", primary: false },
-    { href: "#projects", label: "projects + experience", primary: false },
-    { href: "#bio", label: "bio", primary: false },
-    { href: "#contact", label: "contact", primary: true },
+    { href: "/", label: "home", primary: false },
+    { href: "/#projects", label: "projects + experience", primary: false },
+    { href: "/#bio", label: "bio", primary: false },
+    { href: "/#blog", label: "blog", primary: false },
+    { href: "/#contact", label: "contact", primary: true },
   ];
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
-    if (target.startsWith("#") || target === "") {
+    const currentPath = window.location.pathname;
+    const url = new URL(target, window.location.origin);
+    if (url.pathname === currentPath) {
       e.preventDefault();
-      if (target === "#") {
-        containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      if (url.hash) {
+        const id = url.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element && containerRef.current) {
+          containerRef.current.scrollTo({ top: element.offsetTop, behavior: 'smooth' });
+        }
       } else {
-        document.getElementById(target.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+        if (containerRef.current) {
+          containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }
     }
-  };
+  }
 
   return (
     <header className="fixed top-0 left-0 right-16 lg:right-20 z-40 p-3 flex gap-2 flex-wrap bg-gradient-to-b from-[oklch(0.16_0.01_145)] via-[oklch(0.14_0.01_145/0.6)] to-transparent">
@@ -323,7 +350,7 @@ function BioSection() {
   );
 }
 
-function EnvironmentGallery() {
+function InterestGallery() {
   const rotations = [-5, 4, -3, 3, -2];
   // Pentagon/star formation
   const offsets = [
@@ -374,6 +401,19 @@ function EnvironmentGallery() {
   );
 }
 
+function BlogPreview() {
+  return (
+    <section id="blog" className="relative py-24 px-6">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="font-[family-name:var(--font-cormorant)] text-3xl text-[oklch(0.80_0.02_145)] mb-6">Blog</h2>
+        <a href="/blog" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.75 0.03 145)' }} className="inline-block px-6 py-2 border text-sm font-mono hover:opacity-80 transition-all shadow-[0_0_15px_oklch(0.30_0.04_145/0.15)] bg-[oklch(0.14_0.01_145/0.4)]">
+          visit the blog
+        </a>
+      </div>
+    </section>
+  );
+}
+
 function ContactSection() {
   return (
     <section id="contact" className="relative py-24 px-6">
@@ -401,9 +441,11 @@ function SiteFooter() {
 }
 
 function ProjectHoverImages({ projects, hoveredProject }: { projects: Project[]; hoveredProject: string | null }) {
+  const filteredProjects = projects.filter(p => p.img);
+
   return (
     <>
-      {projects.map(p => p.img && (
+      {filteredProjects.map(p => (
         <motion.div 
           key={`img-${p.name}`} 
           className="fixed pointer-events-none z-35" 
@@ -418,7 +460,12 @@ function ProjectHoverImages({ projects, hoveredProject }: { projects: Project[];
           animate={{ opacity: hoveredProject === p.name ? 0.6 : 0, scale: hoveredProject === p.name ? 1 : 0.9 }} 
           transition={{ duration: 0.3 }}
         >
-          <img src={p.img} alt="" className="w-full h-full object-contain rounded-sm shadow-[0_0_40px_oklch(0.45_0.10_145/0.5)]" />
+          <img 
+            src={p.img} 
+            alt={`Preview of ${p.name} project`}
+            className="w-full h-full object-contain rounded-sm shadow-[0_0_40px_oklch(0.45_0.10_145/0.5)]" 
+            loading="lazy"
+          />
         </motion.div>
       ))}
     </>
