@@ -263,6 +263,9 @@ function HeroSection() {
         <h1 className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">Ramiro Chen</h1>
         <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">...'s Portfolio</p>
       </motion.div>
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex justify-center">
+        <div className="h-px w-24 bg-[oklch(0.95_0.02_145)]" />
+      </div>
     </section>
   );
 }
@@ -273,7 +276,6 @@ function ProjectsSection({ onHoverProject }: { onHoverProject: (name: string | n
 
   return (
     <section id="projects" className="relative py-24 px-6">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[oklch(0.18_0.02_160/0.4)] to-transparent" />
       <div className="max-w-4xl mx-auto">
         <div className="relative flex justify-center" style={{ minHeight: '400px' }}>
           {projects.map((p, i) => (
@@ -312,7 +314,6 @@ function ExperienceSection() {
 
   return (
     <section id="experience" className="relative py-24 px-6">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[oklch(0.18_0.02_160/0.4)] to-transparent" />
       <div className="max-w-4xl mx-auto">
         <div className="relative flex justify-center" style={{ minHeight: '250px' }}>
           <div 
@@ -342,7 +343,6 @@ function ExperienceSection() {
 function BioSection() {
   return (
     <section id="bio" className="relative py-24 px-6">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[oklch(0.17_0.02_300/0.3)] to-transparent" />
       <div className="max-w-3xl mx-auto">
         <motion.div className="relative z-10 flex items-center gap-6" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1.2 }}>
           <p className="font-[family-name:var(--font-crimson)] text-base md:text-lg leading-relaxed text-[oklch(0.75_0.03_145)]">I'm Ramiro. I have a lot of interests. This portfolio site shows just some of them. Well, at least, the most notable ones I can think of.</p>
@@ -407,7 +407,6 @@ function InterestGallery() {
 function BlogPreview() {
   return (
     <section id="blog" className="relative py-24 px-6">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[oklch(0.24_0.03_180/0.25)] to-transparent" />
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="font-[family-name:var(--font-cormorant)] text-3xl text-[oklch(0.80_0.02_145)] mb-6">Blog</h2>
         <a href="/blog" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.75 0.03 145)' }} className="inline-block px-6 py-2 border text-sm font-mono hover:opacity-80 transition-all shadow-[0_0_15px_oklch(0.30_0.04_145/0.15)] bg-[oklch(0.14_0.01_145/0.4)]">
@@ -421,7 +420,6 @@ function BlogPreview() {
 function ContactSection() {
   return (
     <section id="contact" className="relative py-24 px-6">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[oklch(0.17_0.02_250/0.3)] to-transparent" />
       <div className="max-w-sm mx-auto text-center">
         <div className="flex justify-center gap-4 relative z-10">
           <a href="mailto:ramiro.chen@outlook.com" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.55 0.04 145)' }} className="px-4 py-2 border text-xs font-mono hover:opacity-80 transition-all shadow-[0_0_10px_oklch(0.30_0.04_145/0.15)]">email</a>

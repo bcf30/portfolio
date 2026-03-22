@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <Link href="/blog" style={{ borderColor: 'oklch(0.30 0.04 145 / 0.5)', color: 'oklch(0.75 0.03 145)' }} className="inline-block mb-6 px-3 py-1 border text-xs font-mono hover:opacity-80 transition-all">
           &larr; Back to Blog
         </Link>
-        <article>
+        <article className="border border-[oklch(0.30_0.04_145/0.5)] bg-[oklch(0.14_0.01_145/0.6)] p-6">
           <h1 className="font-[family-name:var(--font-cormorant)] text-4xl text-[oklch(0.80_0.02_145)] mb-4">{post.title}</h1>
           <p className="text-xs text-[oklch(0.35_0.04_145)] font-mono mb-6">
             {new Date(post.created_at).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Toronto' })}
