@@ -271,13 +271,13 @@ function HeroSection() {
 }
 
 function ProjectsSection({ onHoverProject }: { onHoverProject: (name: string | null) => void }) {
-  const rotations = [-3, 2, -1.5, 2];
-  const offsets = [{ x: 'calc(50% - 140px)', y: '0' }, { x: 'calc(50% - 80px)', y: '80px' }, { x: 'calc(50% - 120px)', y: '160px' }, { x: 'calc(50% - 60px)', y: '240px' }];
+  const rotations = [-3, 2, -1.5, 2, -3];
+  const offsets = [{ x: 'calc(50% - 140px)', y: '0' }, { x: 'calc(50% - 80px)', y: '80px' }, { x: 'calc(50% - 120px)', y: '160px' }, { x: 'calc(50% - 60px)', y: '240px' }, { x: 'calc(50% - 100px)', y: '320px' }];
 
   return (
     <section id="projects" className="relative py-24 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="relative flex justify-center" style={{ minHeight: '400px' }}>
+        <div className="relative flex justify-center" style={{ minHeight: '480px' }}>
           {projects.map((p, i) => (
             <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className="group absolute w-64 md:w-72 block" style={{ left: offsets[i].x, top: offsets[i].y, zIndex: 10 - i, transform: `rotate(${rotations[i]}deg)` }} onMouseEnter={() => onHoverProject(p.name)} onMouseLeave={() => onHoverProject(null)}>
               <div className={`p-4 bg-[oklch(0.16_0.01_145/0.7)] backdrop-blur-[1px] shadow-[0_0_25px_oklch(0.30_0.06_145/0.25)] group-hover:shadow-[0_0_35px_oklch(0.40_0.08_145/0.35)] group-hover:scale-[1.05] transition-all duration-200 cursor-pointer border border-[oklch(0.30_0.04_145/0.3)] ${p.textAlign === 'right' ? 'text-right' : ''}`} style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}>

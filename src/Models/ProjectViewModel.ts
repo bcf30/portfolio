@@ -35,43 +35,52 @@ export interface FrequencyDataPoint {
  * These would typically come from a database or CMS
  */
 export const projects: Project[] = [
-  { 
-    name: "McDonaldsPy", 
-    url: "https://github.com/bcf30/mcdonaldspy", 
-    desc: "Selenium automation", 
-    tech: "Selenium", 
-    img: "/images/Screenshot 2026-03-04 144838.avif", 
+  {
+    name: "McDonaldsPy",
+    url: "https://github.com/bcf30/mcdonaldspy",
+    desc: "Selenium automation",
+    tech: "Selenium",
+    img: "/images/Screenshot 2026-03-04 144838.avif",
     imgPos: { top: "15%", left: "5%" },
     imgSize: { width: "380px", height: "auto" }
   },
-  { 
-    name: "trans-writes", 
-    url: "https://github.com/bcf30/trans-writes", 
-    desc: "Lossy compression via dithering", 
-    tech: "Tkinter, Pillow, scikit-image", 
-    img: "/images/Screenshot 2026-02-24 202456.avif", 
+  {
+    name: "trans-writes",
+    url: "https://github.com/bcf30/trans-writes",
+    desc: "Lossy compression via dithering",
+    tech: "Tkinter, Pillow, scikit-image",
+    img: "/images/Screenshot 2026-02-24 202456.avif",
     imgPos: { top: "25%", right: "8%" },
     imgSize: { width: "320px", height: "auto" },
     textAlign: "right"
   },
-  { 
-    name: "fashion-mnist", 
-    url: "https://github.com/bcf30/fashion-mnist-image-classification", 
-    desc: "AI image classification", 
-    tech: "PyTorch, matplotlib", 
-    img: "/images/Screenshot 2026-03-04 145116.avif", 
+  {
+    name: "fashion-mnist",
+    url: "https://github.com/bcf30/fashion-mnist-image-classification",
+    desc: "AI image classification",
+    tech: "PyTorch, matplotlib",
+    img: "/images/Screenshot 2026-03-04 145116.avif",
     imgPos: { bottom: "30%", left: "10%" },
     imgSize: { width: "300px", height: "auto" }
   },
-  { 
-    name: "filearchiver", 
-    url: "https://github.com/bcf30/filearchiver", 
-    desc: "File archiver utility", 
-    tech: ".NET 8, C#", 
-    img: "/images/Screenshot 2026-03-04 145243.avif", 
+  {
+    name: "filearchiver",
+    url: "https://github.com/bcf30/filearchiver",
+    desc: "File archiver utility",
+    tech: ".NET 8, C#",
+    img: "/images/Screenshot 2026-03-04 145243.avif",
     imgPos: { bottom: "20%", right: "15%" },
     imgSize: { width: "320px", height: "auto" },
     textAlign: "right"
+  },
+  {
+    name: "notjpegai",
+    url: "https://github.com/bcf30/notjpegai",
+    desc: "MeanScaleHyperprior image compression",
+    tech: "PyTorch, CompressAI, NetworkX",
+    img: "/images/lgbtimage.avif",
+    imgPos: { top: "40%", left: "15%" },
+    imgSize: { width: "320px", height: "auto" }
   },
 ];
 
