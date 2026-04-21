@@ -97,10 +97,12 @@ export default function FilmEffect() {
     <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden mix-blend-screen">
       <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
         {activeFrameData.specks.map((p, pi) => (
-          <circle 
+          <rect 
             key={`p-${pi}`}
-            cx={`${p.x}%`} cy={`${p.y}%`} 
-            r={p.r} 
+            x={`calc(${p.x}% - ${p.r}px)`}
+            y={`calc(${p.y}% - ${p.r}px)`}
+            width={p.r * 2}
+            height={p.r * 2}
             fill="white" 
             opacity={p.opacity}
           />
