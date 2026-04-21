@@ -38,7 +38,7 @@ interface FrequencyState {
 export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
-  
+
   const [portal, setPortal] = useState(false);
   const [timer, setTimer] = useState(DEFAULT_TIMER_SECONDS);
   const [freqState, setFreqState] = useState<FrequencyState>({ progress: 0, frequency: 0, db: -4 });
@@ -52,7 +52,7 @@ export default function PortfolioPage() {
   useEffect(() => {
     return scrollYProgress.on("change", p => {
       let f: number, dbVal: number;
-      
+
       if (p < PADDING_ZONE) {
         f = (p / PADDING_ZONE) * 20;
         dbVal = getDbAtFreq(Math.max(f, 20));
@@ -61,7 +61,7 @@ export default function PortfolioPage() {
         f = Math.pow(10, LOG_20 + adjustedP * LOG_RANGE);
         dbVal = getDbAtFreq(f);
       }
-      
+
       setFreqState({ progress: p, frequency: f, db: dbVal });
     });
   }, [scrollYProgress]);
@@ -104,8 +104,8 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <div 
-        ref={containerRef} 
+      <div
+        ref={containerRef}
         className={portal ? 'hidden' : 'relative h-screen overflow-y-auto overflow-x-hidden bg-[oklch(0.16_0.01_145)]'}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
@@ -113,7 +113,7 @@ export default function PortfolioPage() {
         <FrequencyScrollbar mounted={mounted} freqState={freqState} onScrollTo={scrollTo} />
         <NavigationHeader containerRef={containerRef} />
         <AtmosphericEffects />
-        
+
         <main className="relative z-30 pr-16 lg:pr-20">
           <HeroSection />
           <ProjectsSection onHoverProject={setHoveredProject} />
@@ -189,7 +189,7 @@ function FrequencyScrollbar({ mounted, freqState, onScrollTo }: { mounted: boole
         <defs><linearGradient id="dfGrad" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stopColor="oklch(0.25 0.08 280)" /><stop offset="40%" stopColor="oklch(0.40 0.08 55)" /><stop offset="70%" stopColor="oklch(0.45 0.10 145)" /><stop offset="100%" stopColor="oklch(0.35 0.12 180)" /></linearGradient></defs>
         <path d={dfPath} fill="none" stroke="url(#dfGrad)" strokeWidth="3" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
       </svg>
-      {FREQUENCY_LABELS.map(f => <div key={f} className="absolute left-1 text-[7px] font-mono text-[oklch(0.35_0.06_145)] whitespace-nowrap pointer-events-none" style={{ top: `${(PADDING_ZONE + freqToProgress(f) * (1 - PADDING_ZONE)) * 100}%`, transform: 'translateY(-50%)' }}>{f >= 1000 ? `${f/1000}k` : f}</div>)}
+      {FREQUENCY_LABELS.map(f => <div key={f} className="absolute left-1 text-[7px] font-mono text-[oklch(0.35_0.06_145)] whitespace-nowrap pointer-events-none" style={{ top: `${(PADDING_ZONE + freqToProgress(f) * (1 - PADDING_ZONE)) * 100}%`, transform: 'translateY(-50%)' }}>{f >= 1000 ? `${f / 1000}k` : f}</div>)}
       <div className="absolute left-1 text-[7px] font-mono text-[oklch(0.35_0.06_145)] whitespace-nowrap pointer-events-none" style={{ top: '0%', transform: 'translateY(0)' }}>0</div>
       <motion.div className="absolute text-[9px] font-mono text-[oklch(0.50_0.08_145)] whitespace-nowrap pointer-events-none text-right" style={{ right: `calc(100% - ${dotX}% + 10px)`, top: `${freqState.progress * 100}%`, transform: "translateY(-50%)" }}>{formatFrequency(freqState.frequency)}</motion.div>
       <motion.div className="absolute w-2.5 h-2.5 rounded-full bg-[oklch(0.70_0.10_145)] pointer-events-none" style={{ left: `calc(${dotX}% - 5px)`, top: `${freqState.progress * 100}%`, transform: "translateY(-50%)", boxShadow: "0 0 8px oklch(0.55 0.10 145 / 0.8)" }} />
@@ -261,7 +261,7 @@ function HeroSection() {
       <div className="absolute inset-0 -z-10" style={{ background: "linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))" }} />
       <motion.div className="text-center max-w-2xl relative z-10" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}>
         <h1 className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">Ramiro Chen</h1>
-        <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">...'s Portfolio</p>
+        <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">'s Portfolio</p>
       </motion.div>
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex justify-center">
         <div className="h-px w-24 bg-[oklch(0.95_0.02_145)]" />
@@ -271,13 +271,13 @@ function HeroSection() {
 }
 
 function ProjectsSection({ onHoverProject }: { onHoverProject: (name: string | null) => void }) {
-  const rotations = [-3, 2, -1.5, 2, -3];
-  const offsets = [{ x: 'calc(50% - 140px)', y: '0' }, { x: 'calc(50% - 80px)', y: '80px' }, { x: 'calc(50% - 120px)', y: '160px' }, { x: 'calc(50% - 60px)', y: '240px' }, { x: 'calc(50% - 100px)', y: '320px' }];
+  const rotations = [-3, 2, -1.5, 2, -3, 2];
+  const offsets = [{ x: 'calc(50% - 140px)', y: '0' }, { x: 'calc(50% - 80px)', y: '80px' }, { x: 'calc(50% - 120px)', y: '160px' }, { x: 'calc(50% - 60px)', y: '240px' }, { x: 'calc(50% - 100px)', y: '320px' }, { x: 'calc(50% - 65px)', y: '400px' }];
 
   return (
     <section id="projects" className="relative py-24 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="relative flex justify-center" style={{ minHeight: '480px' }}>
+        <div className="relative flex justify-center" style={{ minHeight: '560px' }}>
           {projects.map((p, i) => (
             <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className="group absolute w-64 md:w-72 block" style={{ left: offsets[i].x, top: offsets[i].y, zIndex: 10 - i, transform: `rotate(${rotations[i]}deg)` }} onMouseEnter={() => onHoverProject(p.name)} onMouseLeave={() => onHoverProject(null)}>
               <div className={`p-4 bg-[oklch(0.16_0.01_145/0.7)] backdrop-blur-[1px] shadow-[0_0_25px_oklch(0.30_0.06_145/0.25)] group-hover:shadow-[0_0_35px_oklch(0.40_0.08_145/0.35)] group-hover:scale-[1.05] transition-all duration-200 cursor-pointer border border-[oklch(0.30_0.04_145/0.3)] ${p.textAlign === 'right' ? 'text-right' : ''}`} style={{ clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)' }}>
@@ -316,9 +316,9 @@ function ExperienceSection() {
     <section id="experience" className="relative py-24 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="relative flex justify-center" style={{ minHeight: '250px' }}>
-          <div 
+          <div
             className="w-80 md:w-96 p-5 bg-[oklch(0.16_0.01_180/0.7)] backdrop-blur-[1px] shadow-[0_0_25px_oklch(0.30_0.06_180/0.25)] hover:shadow-[0_0_35px_oklch(0.40_0.08_180/0.35)] hover:scale-[1.05] transition-all duration-200 cursor-default border border-[oklch(0.30_0.04_180/0.3)]"
-            style={{ 
+            style={{
               clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
               left: offset.x,
               top: offset.y,
@@ -372,13 +372,13 @@ function InterestGallery() {
         <div className="flex flex-col md:flex-row items-start justify-center gap-24">
           <div className="relative w-64 md:w-72" style={{ minHeight: '240px' }}>
             {environmentImageIds.map((img, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 className={`absolute overflow-hidden rounded-sm shadow-[0_0_15px_oklch(0.35_0.06_145/0.25)] ${img.sizeClass}`}
                 style={{ left: offsets[i].x, top: offsets[i].y, transform: `rotate(${rotations[i]}deg)`, zIndex: 10 + zIndices[i] }}
-                initial={{ opacity: 0, y: 10 }} 
-                whileInView={{ opacity: 0.85, y: 0 }} 
-                viewport={{ once: true }} 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 0.85, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
                 <img src={img.src} alt="" className="w-full h-full object-cover grayscale-[25%] hover:grayscale-0 transition-all duration-400" />
@@ -449,24 +449,24 @@ function ProjectHoverImages({ projects, hoveredProject }: { projects: Project[];
   return (
     <>
       {filteredProjects.map(p => (
-        <motion.div 
-          key={`img-${p.name}`} 
-          className="fixed pointer-events-none z-35" 
-          style={{ 
-            ...p.imgPos, 
+        <motion.div
+          key={`img-${p.name}`}
+          className="fixed pointer-events-none z-35"
+          style={{
+            ...p.imgPos,
             width: p.imgSize?.width || 'auto',
             height: p.imgSize?.height || 'auto',
             maxWidth: p.imgSize?.maxWidth || 'none',
             maxHeight: p.imgSize?.maxHeight || 'none',
-          }} 
-          initial={{ opacity: 0, scale: 0.9 }} 
-          animate={{ opacity: hoveredProject === p.name ? 0.6 : 0, scale: hoveredProject === p.name ? 1 : 0.9 }} 
+          }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: hoveredProject === p.name ? 0.6 : 0, scale: hoveredProject === p.name ? 1 : 0.9 }}
           transition={{ duration: 0.3 }}
         >
-          <img 
-            src={p.img} 
+          <img
+            src={p.img}
             alt={`Preview of ${p.name} project`}
-            className="w-full h-full object-contain rounded-sm shadow-[0_0_40px_oklch(0.45_0.10_145/0.5)]" 
+            className="w-full h-full object-contain rounded-sm shadow-[0_0_40px_oklch(0.45_0.10_145/0.5)]"
             loading="lazy"
           />
         </motion.div>

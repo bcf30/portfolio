@@ -69,7 +69,7 @@ export const projects: Project[] = [
     desc: "File archiver utility",
     tech: ".NET 8, C#",
     img: "/images/Screenshot 2026-03-04 145243.avif",
-    imgPos: { bottom: "20%", right: "15%" },
+    imgPos: { bottom: "40%", right: "15%" },
     imgSize: { width: "320px", height: "auto" },
     textAlign: "right"
   },
@@ -79,8 +79,18 @@ export const projects: Project[] = [
     desc: "MeanScaleHyperprior image compression",
     tech: "PyTorch, CompressAI, NetworkX",
     img: "/images/lgbtimage.avif",
-    imgPos: { top: "40%", left: "15%" },
-    imgSize: { width: "320px", height: "auto" }
+    imgPos: { top: "60%", left: "15%" },
+    imgSize: { width: "368px", height: "auto" }
+  },
+  {
+    name: "Puzzle-Galaxies Solver",
+    url: "https://github.com/bcf30/PuzzleGalaxiesSolver",
+    desc: "Heuristically solve Galaxies (AKA Tentai Show)",
+    tech: "Python, Playwright",
+    img: "/images/Screenshot 2026-04-21 161516.avif",
+    imgPos: { bottom: "5%", right: "10%" },
+    imgSize: { width: "320px", height: "auto" },
+    textAlign: "right"
   },
 ];
 
