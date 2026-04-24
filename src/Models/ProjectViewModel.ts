@@ -20,6 +20,7 @@ export interface Project {
     maxHeight?: string;
   };
   textAlign?: "left" | "right";
+  hideGithubIcon?: boolean;
 }
 
 /**
@@ -91,6 +92,16 @@ export const projects: Project[] = [
     imgPos: { bottom: "5%", right: "10%" },
     imgSize: { width: "320px", height: "auto" },
     textAlign: "right"
+  },
+  {
+    name: "E-Bike Battery",
+    url: "https://electriummobility.com/docs/F2025-projects/f25_ebike",
+    desc: "Custom 10S3P Li-ion battery",
+    tech: "Hardware Engineering, Soldering",
+    img: "/images/20251104_201341.webp",
+    imgPos: { bottom: "5%", left: "20%" },
+    imgSize: { width: "256px", height: "auto" },
+    hideGithubIcon: true
   },
 ];
 
