@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+:root {
+  --font-cormorant: var(--font-noto-sans-mono), monospace;
+  --font-crimson: var(--font-noto-sans-mono), monospace;
+}
+
 /* RAMIRO CHEN - Cinematic Portfolio */
 
 /* Hide Next.js dev indicator */

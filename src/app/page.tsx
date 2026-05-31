@@ -152,7 +152,12 @@ function PortalView({ timer, onExit }: { timer: number; onExit: () => void }) {
         </button>
       </header>
       <div className="flex-1 flex items-center justify-center p-8 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="max-w-xl text-center">
+        <motion.div 
+          initial={{ opacity: 0, filter: "brightness(2.5) contrast(1.2)", scale: 0.98 }} 
+          animate={{ opacity: 1, filter: "brightness(1) contrast(1)", scale: 1 }} 
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} 
+          className="max-w-xl text-center"
+        >
           <div className="my-8">
             <p className="font-mono text-xs text-[oklch(0.40_0.04_145)] mb-2">time remaining</p>
             <div className="font-[family-name:var(--font-cormorant)] text-5xl text-[oklch(0.65_0.08_340)]">{formatTime(timer)}</div>
@@ -256,13 +261,52 @@ function AtmosphericEffects() {
 }
 
 function HeroSection() {
+  const subtitleText = "'s Portfolio";
+  const [visibleCharCount, setVisibleCharCount] = useState(0);
+
+  useEffect(() => {
+    const startTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        setVisibleCharCount((prev) => {
+          if (prev < subtitleText.length) {
+            return prev + 1;
+          }
+          clearInterval(interval);
+          return prev;
+        });
+      }, 80);
+      return () => clearInterval(interval);
+    }, 1200);
+
+    return () => clearTimeout(startTimeout);
+  }, []);
+
   return (
     <section className="min-h-screen flex items-center justify-center relative px-6">
       <div className="absolute inset-0 -z-10" style={{ background: "linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))" }} />
-      <motion.div className="text-center max-w-2xl relative z-10" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}>
-        <h1 className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">Ramiro Chen</h1>
-        <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">'s Portfolio</p>
-      </motion.div>
+      <div className="text-center max-w-2xl relative z-10">
+        <motion.h1 
+          className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]"
+          initial={{ opacity: 0, filter: "blur(4px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Ramiro Chen
+        </motion.h1>
+        <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">
+          <span>{subtitleText.slice(0, visibleCharCount)}</span>
+          <motion.span
+            initial={{ opacity: 1 }}
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{
+              duration: 0.8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="inline-block w-1.5 h-3.5 ml-1 bg-[oklch(0.60_0.04_145)] align-middle"
+          />
+        </p>
+      </div>
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex justify-center">
         <div className="h-px w-24 bg-[oklch(0.95_0.02_145)]" />
       </div>
@@ -344,9 +388,23 @@ function BioSection() {
   return (
     <section id="bio" className="relative py-24 px-6">
       <div className="max-w-3xl mx-auto">
-        <motion.div className="relative z-10 flex items-center gap-6" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1.2 }}>
+        <motion.div 
+          className="relative z-10 flex items-center gap-6" 
+          initial={{ opacity: 0, filter: "blur(6px)" }} 
+          whileInView={{ opacity: 1, filter: "blur(0px)" }} 
+          viewport={{ once: true, margin: "-100px" }} 
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        >
           <p className="font-[family-name:var(--font-crimson)] text-base md:text-lg leading-relaxed text-[oklch(0.75_0.03_145)]">I'm Ramiro. I have a lot of interests. This portfolio site shows just some of them. Well, at least, the most notable ones I can think of.</p>
-          <motion.img src="/images/buffalo.avif" alt="" className="w-32 md:w-44 rounded-sm opacity-50 grayscale-[20%] shadow-[0_0_20px_oklch(0.35_0.06_145/0.3)] shrink-0" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 0.5, x: 0 }} viewport={{ once: true }} />
+          <motion.img 
+            src="/images/buffalo.avif" 
+            alt="" 
+            className="w-32 md:w-44 rounded-sm opacity-50 grayscale-[20%] shadow-[0_0_20px_oklch(0.35_0.06_145/0.3)] shrink-0" 
+            initial={{ opacity: 0, filter: "blur(6px)", x: 20 }} 
+            whileInView={{ opacity: 0.5, filter: "blur(0px)", x: 0 }} 
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          />
         </motion.div>
       </div>
     </section>
@@ -376,18 +434,32 @@ function InterestGallery() {
                 key={i}
                 className={`absolute overflow-hidden rounded-sm shadow-[0_0_15px_oklch(0.35_0.06_145/0.25)] ${img.sizeClass}`}
                 style={{ left: offsets[i].x, top: offsets[i].y, transform: `rotate(${rotations[i]}deg)`, zIndex: 10 + zIndices[i] }}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 0.85, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                initial={{ opacity: 0, filter: "blur(6px)", y: 15 }}
+                whileInView={{ opacity: 0.85, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, delay: i * 0.15, ease: "easeOut" }}
               >
                 <img src={img.src} alt="" className="w-full h-full object-cover grayscale-[25%] hover:grayscale-0 transition-all duration-400" />
               </motion.div>
             ))}
           </div>
           <div className="text-left">
-            <motion.p className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] italic mb-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>Some of the many things I love.</motion.p>
-            <motion.ul className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] list-none pl-0" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+            <motion.p 
+              className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] italic mb-4" 
+              initial={{ opacity: 0, filter: "blur(5px)" }} 
+              whileInView={{ opacity: 1, filter: "blur(0px)" }} 
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            >
+              Some of the many things I love.
+            </motion.p>
+            <motion.ul 
+              className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] list-none pl-0" 
+              initial={{ opacity: 0, filter: "blur(5px)" }} 
+              whileInView={{ opacity: 1, filter: "blur(0px)" }} 
+              viewport={{ once: true, margin: "-100px" }} 
+              transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+            >
               <li>- film</li>
               <li>- audio</li>
               <li>- ML</li>
@@ -459,9 +531,13 @@ function ProjectHoverImages({ projects, hoveredProject }: { projects: Project[];
             maxWidth: p.imgSize?.maxWidth || 'none',
             maxHeight: p.imgSize?.maxHeight || 'none',
           }}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: hoveredProject === p.name ? 0.6 : 0, scale: hoveredProject === p.name ? 1 : 0.9 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, scale: 0.95, filter: "blur(6px)" }}
+          animate={{ 
+            opacity: hoveredProject === p.name ? 0.6 : 0, 
+            scale: hoveredProject === p.name ? 1 : 0.95,
+            filter: hoveredProject === p.name ? "blur(0px)" : "blur(6px)"
+          }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
         >
           <img
             src={p.img}

@@ -1,22 +1,14 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Crimson_Text } from "next/font/google";
+import { Noto_Sans_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import FilmEffect from "@/components/FilmEffect";
 
-/* Display font - elegant, editorial */
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+/* Optimized Monospace Font for a clean screenplay / technical catalog look */
+const notoSansMono = Noto_Sans_Mono({
+  variable: "--font-noto-sans-mono",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-/* Body font - readable, warm, literary */
-const crimson = Crimson_Text({
-  variable: "--font-crimson",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
   display: "swap",
 });
 
@@ -71,7 +63,7 @@ export default function RootLayout({
           ::-webkit-scrollbar { display: none !important; }
         ` }} />
       </head>
-      <body className={`${cormorant.variable} ${crimson.variable} antialiased`}>
+      <body className={`${notoSansMono.variable} antialiased`}>
         <FilmEffect />
         {children}
         <Analytics />
