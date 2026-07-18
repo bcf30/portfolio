@@ -147,7 +147,7 @@ function PortalView({ timer, onExit }: { timer: number; onExit: () => void }) {
       <NoiseOverlay />
       <BackgroundImage url="/images/turnpike.avif" />
       <header className="absolute top-0 left-0 z-50 p-3">
-        <button onClick={onExit} style={{ borderColor: 'oklch(0.50 0.04 145)', color: 'oklch(0.75 0.03 145)' }} className="px-3 py-1.5 border text-xs font-mono hover:opacity-80 transition-all bg-[oklch(0.16_0.01_145)]">
+        <button onClick={onExit} style={{ borderColor: 'oklch(0.50 0.04 145)', color: 'oklch(0.75 0.03 145)' }} className="px-3 py-1.5 border text-xs font-mono hover:opacity-80 transition-all cursor-pointer bg-[oklch(0.16_0.01_145)]">
           &larr; home
         </button>
       </header>
@@ -261,51 +261,27 @@ function AtmosphericEffects() {
 }
 
 function HeroSection() {
-  const subtitleText = "'s Portfolio";
-  const [visibleCharCount, setVisibleCharCount] = useState(0);
-
-  useEffect(() => {
-    const startTimeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        setVisibleCharCount((prev) => {
-          if (prev < subtitleText.length) {
-            return prev + 1;
-          }
-          clearInterval(interval);
-          return prev;
-        });
-      }, 80);
-      return () => clearInterval(interval);
-    }, 1200);
-
-    return () => clearTimeout(startTimeout);
-  }, []);
-
   return (
     <section className="min-h-screen flex items-center justify-center relative px-6">
       <div className="absolute inset-0 -z-10" style={{ background: "linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))" }} />
       <div className="text-center max-w-2xl relative z-10">
-        <motion.h1 
-          className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]"
-          initial={{ opacity: 0, filter: "blur(4px)" }}
-          animate={{ opacity: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          Ramiro Chen
-        </motion.h1>
-        <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">
-          <span>{subtitleText.slice(0, visibleCharCount)}</span>
-          <motion.span
-            initial={{ opacity: 1 }}
-            animate={{ opacity: [1, 0, 1] }}
-            transition={{
-              duration: 0.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="inline-block w-1.5 h-3.5 ml-1 bg-[oklch(0.60_0.04_145)] align-middle"
+        {/* Wipe reveal: a panel matching the page background covers the text,
+            then slides straight down to unveil it top-to-bottom */}
+        <div className="relative inline-block overflow-hidden">
+          <h1 className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">
+            Ramiro Chen
+          </h1>
+          <p className="font-[family-name:var(--font-crimson)] text-sm md:text-base text-[oklch(0.60_0.04_145)] mt-2">
+            &apos;s Portfolio
+          </p>
+          <motion.div
+            aria-hidden
+            className="absolute inset-0 z-20 bg-[oklch(0.16_0.01_145)]"
+            initial={{ y: "0%" }}
+            animate={{ y: "100%" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           />
-        </p>
+        </div>
       </div>
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex justify-center">
         <div className="h-px w-24 bg-[oklch(0.95_0.02_145)]" />
@@ -388,24 +364,24 @@ function BioSection() {
   return (
     <section id="bio" className="relative py-24 px-6">
       <div className="max-w-3xl mx-auto">
-        <motion.div 
-          className="relative z-10 flex items-center gap-6" 
-          initial={{ opacity: 0, filter: "blur(6px)" }} 
-          whileInView={{ opacity: 1, filter: "blur(0px)" }} 
-          viewport={{ once: true, margin: "-100px" }} 
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        >
-          <p className="font-[family-name:var(--font-crimson)] text-base md:text-lg leading-relaxed text-[oklch(0.75_0.03_145)]">I'm Ramiro. I have a lot of interests. This portfolio site shows just some of them. Well, at least, the most notable ones I can think of.</p>
-          <motion.img 
-            src="/images/buffalo.avif" 
-            alt="" 
-            className="w-32 md:w-44 rounded-sm opacity-50 grayscale-[20%] shadow-[0_0_20px_oklch(0.35_0.06_145/0.3)] shrink-0" 
-            initial={{ opacity: 0, filter: "blur(6px)", x: 20 }} 
-            whileInView={{ opacity: 0.5, filter: "blur(0px)", x: 0 }} 
+        <div className="relative z-10 overflow-hidden">
+          <div className="flex items-center gap-6">
+            <p className="font-[family-name:var(--font-crimson)] text-base md:text-lg leading-relaxed text-[oklch(0.75_0.03_145)]">I'm Ramiro. I have a lot of interests. This portfolio site shows just some of them. Well, at least, the most notable ones I can think of.</p>
+            <img
+              src="/images/buffalo.avif"
+              alt=""
+              className="w-32 md:w-44 rounded-sm opacity-50 grayscale-[20%] shadow-[0_0_20px_oklch(0.35_0.06_145/0.3)] shrink-0"
+            />
+          </div>
+          <motion.div
+            aria-hidden
+            className="absolute inset-0 z-20 bg-[oklch(0.16_0.01_145)]"
+            initial={{ y: "0%" }}
+            whileInView={{ y: "100%" }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           />
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -443,32 +419,29 @@ function InterestGallery() {
               </motion.div>
             ))}
           </div>
-          <div className="text-left">
-            <motion.p 
-              className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] italic mb-4" 
-              initial={{ opacity: 0, filter: "blur(5px)" }} 
-              whileInView={{ opacity: 1, filter: "blur(0px)" }} 
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            >
+          <div className="relative overflow-hidden text-left">
+            <p className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] italic mb-4">
               Some of the many things I love.
-            </motion.p>
-            <motion.ul 
-              className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] list-none pl-0" 
-              initial={{ opacity: 0, filter: "blur(5px)" }} 
-              whileInView={{ opacity: 1, filter: "blur(0px)" }} 
-              viewport={{ once: true, margin: "-100px" }} 
-              transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-            >
+            </p>
+            <ul className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] list-none pl-0">
               <li>- film</li>
               <li>- audio</li>
               <li>- ML</li>
               <li>- data compression</li>
+              <li>- image processing</li>
               <li>- environment</li>
               <li>- the sciences</li>
               <li>- triathlon</li>
-              <li>- and more...</li>
-            </motion.ul>
+              <li>- (and more)</li>
+            </ul>
+            <motion.div
+              aria-hidden
+              className="absolute inset-0 z-20 bg-[oklch(0.16_0.01_145)]"
+              initial={{ y: "0%" }}
+              whileInView={{ y: "100%" }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            />
           </div>
         </div>
       </div>
