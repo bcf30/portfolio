@@ -421,10 +421,10 @@ function InterestGallery() {
           </div>
           <div className="relative overflow-hidden text-left">
             <p className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] italic mb-4">
-              Some of the many things I love.
+              My interests!
             </p>
             <ul className="font-[family-name:var(--font-crimson)] text-base text-[oklch(0.60_0.04_145)] list-none pl-0">
-              <li>- film</li>
+              <li>- film (<a href="https://letterboxd.com/bigimdbfan30/" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80">my letterboxd!</a>)</li>
               <li>- audio</li>
               <li>- ML</li>
               <li>- data compression</li>
