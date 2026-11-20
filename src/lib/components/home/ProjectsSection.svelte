@@ -44,9 +44,9 @@
             <div class={`flex items-baseline mb-1 ${headerAlignment(p.textAlign, p.hideGithubIcon)}`}>
               {#if p.textAlign === "right"}
                 {#if !p.hideGithubIcon}<GithubIcon class="w-3.5 h-3.5 text-[oklch(0.40_0.04_145)] group-hover:text-[oklch(0.55_0.08_145)] transition-colors" />{/if}
-                <h3 class="font-[family-name:var(--font-cormorant)] text-lg text-[oklch(0.80_0.02_145)] group-hover:text-[oklch(0.90_0.04_145)] transition-colors">{p.name}</h3>
+                <h3 class="font-[family-name:var(--font-cormorant)] text-sm md:text-base text-[oklch(0.80_0.02_145)] group-hover:text-[oklch(0.90_0.04_145)] transition-colors">{p.name}</h3>
               {:else}
-                <h3 class="font-[family-name:var(--font-cormorant)] text-lg text-[oklch(0.80_0.02_145)] group-hover:text-[oklch(0.90_0.04_145)] transition-colors">{p.name}</h3>
+                <h3 class="font-[family-name:var(--font-cormorant)] text-sm md:text-base text-[oklch(0.80_0.02_145)] group-hover:text-[oklch(0.90_0.04_145)] transition-colors">{p.name}</h3>
                 {#if !p.hideGithubIcon}<GithubIcon class="w-3.5 h-3.5 text-[oklch(0.40_0.04_145)] group-hover:text-[oklch(0.55_0.08_145)] transition-colors" />{/if}
               {/if}
             </div>

@@ -8,15 +8,33 @@ vi.mock("$app/state", () => state);
 import FilmEffect from "./FilmEffect.svelte";
 import { filmGrain, setFilmGrainEnabled } from "#lib/film-grain.svelte.ts";
 
-/** A fingerprint of the specks currently drawn, to tell frames apart. */
-const frameSignature = (root: HTMLElement) =>
-  [...root.querySelectorAll("rect")].map((rect) => `${rect.getAttribute("x")}|${rect.getAttribute("opacity")}`).join(",");
+// A recording 2D context; jsdom has no real canvas
+function fakeContext() {
+  return {
+    clearRect: vi.fn(),
+    fillRect: vi.fn(),
+    save: vi.fn(),
+    restore: vi.fn(),
+    translate: vi.fn(),
+    beginPath: vi.fn(),
+    arc: vi.fn(),
+    fill: vi.fn(),
+    putImageData: vi.fn(),
+    createPattern: vi.fn(() => ({})),
+    createImageData: vi.fn((w: number, h: number) => ({ width: w, height: h, data: new Uint8ClampedArray(w * h * 4) })),
+    globalAlpha: 1,
+    fillStyle: "" as unknown,
+  };
+}
 
-async function advanceFrames(count: number) {
-  for (let i = 0; i < count; i++) {
-    vi.advanceTimersByTime(100);
-    await tick();
-  }
+let mainContext: ReturnType<typeof fakeContext>;
+
+/** Frames drawn so far on the visible canvas (each frame starts with one clearRect). */
+const framesDrawn = () => mainContext.clearRect.mock.calls.length;
+
+async function advance(ms: number) {
+  vi.advanceTimersByTime(ms);
+  await tick();
 }
 
 /** Pretends the visitor's OS asks for reduced motion (jsdom has no matchMedia). */
@@ -28,78 +46,86 @@ beforeEach(() => {
   state.page.url = new URL("http://localhost/");
   filmGrain.enabled = true;
   localStorage.clear();
+  mainContext = fakeContext();
+  // The on-screen canvas gets `mainContext`; the off-screen grain tiles each get their own
+  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockImplementation(function (this: HTMLCanvasElement) {
+    return (this.isConnected ? mainContext : fakeContext()) as never;
+  });
 });
 
 afterEach(() => {
   vi.useRealTimers();
 });
 
-// Spies on FilmEffect's own interval. vi.getTimerCount() can't be used here because
-// jsdom's localStorage schedules a setTimeout to fire `storage` events.
+// FilmEffect's own interval. vi.getTimerCount() isn't usable: jsdom's localStorage schedules timeouts.
 function watchIntervals() {
   return { setInterval: vi.spyOn(globalThis, "setInterval"), clearInterval: vi.spyOn(globalThis, "clearInterval") };
 }
 
-describe("FilmEffect drawing", () => {
-  it("draws between 30 and 45 specks on the homepage", () => {
+describe("FilmEffect layers", () => {
+  it("covers the screen with a canvas and scanlines, without blocking clicks", () => {
     const { container } = render(FilmEffect);
-    const count = container.querySelectorAll("rect").length;
-    expect(count).toBeGreaterThanOrEqual(30);
-    expect(count).toBeLessThanOrEqual(45);
+    const overlay = container.querySelector("div")!;
+    expect(overlay.className).toContain("fixed inset-0");
+    expect(overlay.className).toContain("pointer-events-none");
+    expect(overlay.querySelector("canvas")).not.toBeNull();
+    expect(overlay.innerHTML).toContain("repeating-linear-gradient");
   });
 
   it.each(["/blog", "/blog/some-post", "/admin/blog"])("is hidden on %s", (path) => {
     state.page.url = new URL(`http://localhost${path}`);
     const { container } = render(FilmEffect);
-    expect(container.querySelector("svg")).toBeNull();
+    expect(container.querySelector("canvas")).toBeNull();
   });
 
-  it("draws the same first frame on every render, so server and browser HTML match", () => {
-    const first = frameSignature(render(FilmEffect).container);
-    const second = frameSignature(render(FilmEffect).container);
-    expect(second).toBe(first);
+  it("sizes the canvas to the window and follows resizes", async () => {
+    const { container } = render(FilmEffect);
+    const canvas = container.querySelector("canvas")!;
+    expect([canvas.width, canvas.height]).toEqual([window.innerWidth, window.innerHeight]);
+
+    vi.stubGlobal("innerWidth", 800);
+    vi.stubGlobal("innerHeight", 600);
+    await fireEvent(window, new Event("resize"));
+    expect([canvas.width, canvas.height]).toEqual([800, 600]);
+  });
+
+  it("builds 8 grain tiles once, not on every frame", async () => {
+    render(FilmEffect);
+    expect(mainContext.createPattern).toHaveBeenCalledTimes(8);
+    await advance(400);
+    expect(mainContext.createPattern).toHaveBeenCalledTimes(8);
   });
 });
 
 describe("FilmEffect animation", () => {
-  it("moves to a new frame every 100ms (10 fps) without any scrolling", async () => {
-    const { container } = render(FilmEffect);
-    const frame0 = frameSignature(container);
-
-    vi.advanceTimersByTime(99);
-    await tick();
-    expect(frameSignature(container)).toBe(frame0);
-
-    vi.advanceTimersByTime(1);
-    await tick();
-    expect(frameSignature(container)).not.toBe(frame0);
-  });
-
-  it("shows 8 different frames, then loops", async () => {
-    const { container } = render(FilmEffect);
-    const frames = [frameSignature(container)];
-    for (let i = 1; i < 8; i++) {
-      await advanceFrames(1);
-      frames.push(frameSignature(container));
-    }
-    expect(new Set(frames).size).toBe(8);
-
-    await advanceFrames(1);
-    expect(frameSignature(container)).toBe(frames[0]);
+  it("draws a frame straight away, then one every 40ms (25 fps)", async () => {
+    render(FilmEffect);
+    expect(framesDrawn()).toBe(1);
+    await advance(39);
+    expect(framesDrawn()).toBe(1);
+    await advance(1);
+    expect(framesDrawn()).toBe(2);
+    await advance(1000);
+    expect(framesDrawn()).toBe(27);
   });
 
   it("ignores scrolling", async () => {
-    const { container } = render(FilmEffect);
-    const frame0 = frameSignature(container);
-    Object.defineProperty(document.documentElement, "scrollTop", { value: 5000, configurable: true });
+    render(FilmEffect);
     await fireEvent.scroll(window);
     await fireEvent.scroll(document.body);
-    expect(frameSignature(container)).toBe(frame0);
+    expect(framesDrawn()).toBe(1);
+  });
+
+  it("shows nothing, and doesn't animate, if the browser can't draw on a canvas", () => {
+    vi.mocked(HTMLCanvasElement.prototype.getContext).mockReturnValue(null);
+    const intervals = watchIntervals();
+    render(FilmEffect);
+    expect(intervals.setInterval).not.toHaveBeenCalled();
   });
 });
 
 describe("turning the grain off and on", () => {
-  it("removes the specks and stops the timer when turned off", async () => {
+  it("removes the overlay and stops the timer when turned off", async () => {
     const intervals = watchIntervals();
     const { container } = render(FilmEffect);
     expect(intervals.setInterval).toHaveBeenCalledTimes(1);
@@ -108,21 +134,19 @@ describe("turning the grain off and on", () => {
     setFilmGrainEnabled(false);
     await tick();
 
-    expect(container.querySelector("svg")).toBeNull();
+    expect(container.querySelector("canvas")).toBeNull();
     expect(intervals.clearInterval).toHaveBeenCalledWith(intervalId);
-    expect(intervals.setInterval).toHaveBeenCalledTimes(1);
   });
 
-  it("brings them back and resumes animating when turned on again", async () => {
-    const { container } = render(FilmEffect);
+  it("starts animating again when turned back on", async () => {
+    render(FilmEffect);
     setFilmGrainEnabled(false);
     await tick();
     setFilmGrainEnabled(true);
     await tick();
-    const frame = frameSignature(container);
-    expect(frame).not.toBe("");
-    await advanceFrames(1);
-    expect(frameSignature(container)).not.toBe(frame);
+    const before = framesDrawn();
+    await advance(80);
+    expect(framesDrawn()).toBe(before + 2);
   });
 
   it("doesn't run a timer on the blog, where it's hidden anyway", () => {
@@ -138,14 +162,14 @@ describe("remembered preference", () => {
     localStorage.setItem("film-grain", "off");
     const { container } = render(FilmEffect);
     await tick();
-    expect(container.querySelector("svg")).toBeNull();
+    expect(container.querySelector("canvas")).toBeNull();
   });
 
   it("starts off for visitors who prefer reduced motion", async () => {
     prefersReducedMotion(true);
     const { container } = render(FilmEffect);
     await tick();
-    expect(container.querySelector("svg")).toBeNull();
+    expect(container.querySelector("canvas")).toBeNull();
   });
 
   it("lets a saved 'on' win over the reduced-motion default", async () => {
@@ -153,13 +177,13 @@ describe("remembered preference", () => {
     localStorage.setItem("film-grain", "on");
     const { container } = render(FilmEffect);
     await tick();
-    expect(container.querySelector("svg")).not.toBeNull();
+    expect(container.querySelector("canvas")).not.toBeNull();
   });
 
   it("starts on for everyone else", async () => {
     prefersReducedMotion(false);
     const { container } = render(FilmEffect);
     await tick();
-    expect(container.querySelector("svg")).not.toBeNull();
+    expect(container.querySelector("canvas")).not.toBeNull();
   });
 });

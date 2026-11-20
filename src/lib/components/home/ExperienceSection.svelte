@@ -42,8 +42,9 @@
           style:transform={`rotate(${rotations[i % rotations.length]}deg)`}
         >
           <div class="flex items-baseline mb-1">
-            <h3 class="font-[family-name:var(--font-cormorant)] text-xl text-[oklch(0.80_0.02_180)]">{exp.position}</h3>
-            <BriefcaseIcon class="w-4 h-4 text-[oklch(0.40_0.04_180)] ml-auto" />
+            <!-- Sized so the longest title (32 monospace chars) stays on one line at both card widths -->
+            <h3 class="font-[family-name:var(--font-cormorant)] text-[13px] md:text-base text-[oklch(0.80_0.02_180)]">{exp.position}</h3>
+            <BriefcaseIcon class="w-4 h-4 shrink-0 text-[oklch(0.40_0.04_180)] ml-auto" />
           </div>
           <p class="text-sm text-[oklch(0.50_0.04_180)] font-semibold">{exp.company}</p>
           <p class="text-xs text-[oklch(0.35_0.04_180)] mt-1 font-mono">{exp.period}</p>
