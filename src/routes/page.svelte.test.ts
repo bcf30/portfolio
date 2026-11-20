@@ -41,6 +41,22 @@ describe("homepage content", () => {
     expect(link.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
+  it("credits Apichatpong Weerasethakul in the footer, with no quote left over", () => {
+    render(HomePage);
+    const footer = document.querySelector("footer")!;
+    expect(footer.textContent?.trim()).toBe("Site design is inspired by the films of Apichatpong Weerasethakul.");
+  });
+
+  it("offers email and GitHub as contact links, and no resume", () => {
+    render(HomePage);
+    const links = [...document.querySelectorAll("#contact a")].map((link) => [link.textContent, link.getAttribute("href")]);
+    expect(links).toEqual([
+      ["email", "mailto:ramiro.chen@outlook.com"],
+      ["github", "https://github.com/bcf30"],
+    ]);
+    expect(document.body.innerHTML).not.toContain("docs.google.com");
+  });
+
   it("hides the GitHub icon only for the E-Bike Battery card", () => {
     render(HomePage);
     expect(screen.getByRole("link", { name: /E-Bike Battery/ }).querySelector("svg")).toBeNull();
@@ -135,6 +151,18 @@ describe("navigation header", () => {
     const scrollTo = vi.spyOn(scrollContainer(), "scrollTo");
     await fireEvent.click(screen.getByRole("link", { name: "home" }));
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 0, behavior: "smooth" });
+  });
+});
+
+describe("film grain switch", () => {
+  it("sits beside the portal door in the bottom-left corner", () => {
+    render(HomePage);
+    const toggle = screen.getByRole("switch", { name: "Film grain" });
+    const door = screen.getByRole("button", { name: "Open portal" });
+    expect(toggle.className).toContain("bottom-6");
+    expect(door.className).toContain("bottom-6");
+    expect(toggle.className).toContain("left-16");
+    expect(door.className).toContain("left-6");
   });
 });
 

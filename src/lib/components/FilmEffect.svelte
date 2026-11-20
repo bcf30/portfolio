@@ -9,7 +9,7 @@
   })();
 
   const FRAMES_COUNT = 8; // 8 distinct presets
-  const PIXELS_PER_FRAME = 160;
+  const FRAME_INTERVAL_MS = 100; // 10 fps
 
   // A baseline of 45 specks provides "smart random" jitter
   const baselineSpecks = Array.from({ length: 45 }).map(() => {
@@ -43,35 +43,27 @@
 </script>
 
 <script lang="ts">
+  import { onMount } from "svelte";
   import { page } from "$app/state";
+  import { filmGrain, loadFilmGrainPreference } from "#lib/film-grain.svelte.ts";
 
-  let scrollY = $state(0);
+  let frameIndex = $state(0);
 
-  const hidden = $derived(page.url.pathname.startsWith("/blog") || page.url.pathname.startsWith("/admin/blog"));
-  // Double modulo keeps the index valid when Safari's overscroll makes scrollY negative
-  const frameIndex = $derived(((Math.floor(scrollY / PIXELS_PER_FRAME) % FRAMES_COUNT) + FRAMES_COUNT) % FRAMES_COUNT);
+  const onBlog = $derived(page.url.pathname.startsWith("/blog") || page.url.pathname.startsWith("/admin/blog"));
+  const visible = $derived(filmGrain.enabled && !onBlog);
   const activeFrame = $derived(framesData[frameIndex]);
 
-  // The homepage scrolls inside a div, not the window, so listen in the capture phase
-  // to catch scroll events from any element.
+  onMount(loadFilmGrainPreference);
+
+  // Step through the frames on a timer, independent of scrolling; stops while hidden
   $effect(() => {
-    let ticking = false;
-    const handleScroll = (e: Event) => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const target = e.target;
-        scrollY = target instanceof HTMLElement ? target.scrollTop || window.scrollY : window.scrollY;
-        ticking = false;
-      });
-    };
-    scrollY = window.scrollY;
-    window.addEventListener("scroll", handleScroll, { passive: true, capture: true });
-    return () => window.removeEventListener("scroll", handleScroll, { capture: true });
+    if (!visible) return;
+    const interval = setInterval(() => (frameIndex = (frameIndex + 1) % FRAMES_COUNT), FRAME_INTERVAL_MS);
+    return () => clearInterval(interval);
   });
 </script>
 
-{#if !hidden}
+{#if visible}
   <div class="pointer-events-none fixed inset-0 z-[9999] overflow-hidden mix-blend-screen">
     <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
       {#each activeFrame.specks as speck, index (index)}

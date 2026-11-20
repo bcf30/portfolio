@@ -16,6 +16,7 @@
   import ProjectHoverImages from "#lib/components/home/ProjectHoverImages.svelte";
   import PortalButton from "#lib/components/home/PortalButton.svelte";
   import PortalView from "#lib/components/home/PortalView.svelte";
+  import FilmGrainToggle from "#lib/components/home/FilmGrainToggle.svelte";
 
   const DEFAULT_TIMER_SECONDS = 900;
   const INITIAL_FREQ_STATE: FrequencyState = { progress: 0, frequency: 0, db: -4 };
@@ -102,6 +103,7 @@
 
   <ProjectHoverImages {hoveredProject} />
   <PortalButton onclick={() => (portal = true)} />
+  <FilmGrainToggle />
 </div>
 {#if portal}
   <PortalView {timer} onExit={exitPortal} />

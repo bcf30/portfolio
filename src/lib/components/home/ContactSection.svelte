@@ -2,7 +2,6 @@
   const links = [
     { href: "mailto:ramiro.chen@outlook.com", label: "email", external: false },
     { href: "https://github.com/bcf30", label: "github", external: true },
-    { href: "https://docs.google.com/document/d/1C5982snG7InL7BCPCAjiM3a6hkCh70tNxLJtP0ChuPE/edit?usp=sharing", label: "resume", external: true },
   ];
 </script>
 

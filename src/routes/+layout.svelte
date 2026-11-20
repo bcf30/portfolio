@@ -1,4 +1,10 @@
 <script lang="ts">
+  // Self-hosted Noto Sans Mono, same as the original next/font setup: latin subset, weights 300-700, display swap
+  import "@fontsource/noto-sans-mono/latin-300.css";
+  import "@fontsource/noto-sans-mono/latin-400.css";
+  import "@fontsource/noto-sans-mono/latin-500.css";
+  import "@fontsource/noto-sans-mono/latin-600.css";
+  import "@fontsource/noto-sans-mono/latin-700.css";
   import "../app.css";
   import type { Snippet } from "svelte";
   import { page } from "$app/state";
