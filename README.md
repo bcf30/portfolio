@@ -1,3 +1,2 @@
 Portfolio website for Ramiro Chen.
-
-Made with Next.js, React, Tailwind CSS, Vercel Postgres, Vercel Blob, Framer Motion
+Made with SvelteKit, Svelte 5, Tailwind CSS, Vercel Postgres, Vercel Blob

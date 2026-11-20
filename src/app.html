@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="%sveltekit.assets%/images/icon/buffalofav.png" />
+    <!-- Inline so the dark background paints before the stylesheet loads (no white flash) -->
+    <style>
+      html, body { background: oklch(0.16 0.01 145) !important; }
+      * { scrollbar-width: none !important; }
+      ::-webkit-scrollbar { display: none !important; }
+    </style>
+    %sveltekit.head%
+  </head>
+  <body class="antialiased">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
