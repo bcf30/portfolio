@@ -13,6 +13,3 @@ class StubIntersectionObserver {
 globalThis.IntersectionObserver ??= StubIntersectionObserver as unknown as typeof IntersectionObserver;
 
 Element.prototype.scrollTo ??= function scrollTo() {};
-
-// jsdom logs "Not implemented" for canvas; behave like a browser without canvas support instead
-HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;

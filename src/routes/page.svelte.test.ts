@@ -154,10 +154,10 @@ describe("navigation header", () => {
   });
 });
 
-describe("film grain switch", () => {
+describe("filter switch", () => {
   it("sits beside the portal door in the bottom-left corner", () => {
     render(HomePage);
-    const toggle = screen.getByRole("switch", { name: "Film grain" });
+    const toggle = screen.getByRole("switch", { name: "Filter" });
     const door = screen.getByRole("button", { name: "Open portal" });
     expect(toggle.className).toContain("bottom-6");
     expect(door.className).toContain("bottom-6");

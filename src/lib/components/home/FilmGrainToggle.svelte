@@ -12,13 +12,13 @@
   type="button"
   role="switch"
   aria-checked={filmGrain.enabled}
-  aria-label="Film grain"
-  title="Film grain"
+  aria-label="Filter"
+  title="Filter: film grain"
   onclick={() => setFilmGrainEnabled(!filmGrain.enabled)}
   class="fixed bottom-6 left-16 z-50 flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity"
 >
   <span class={`relative block w-7 h-4 rounded-full border transition-colors ${filmGrain.enabled ? TRACK_ON : TRACK_OFF}`}>
     <span class={`absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full transition-[left,background-color] ${filmGrain.enabled ? KNOB_ON : KNOB_OFF}`}></span>
   </span>
-  <span class="text-[9px] font-mono text-[oklch(0.45_0.04_145)]">grain</span>
+  <span class="text-[9px] font-mono text-[oklch(0.45_0.04_145)]">filter</span>
 </button>

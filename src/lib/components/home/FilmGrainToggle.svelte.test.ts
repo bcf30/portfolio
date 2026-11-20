@@ -8,7 +8,7 @@ beforeEach(() => {
   localStorage.clear();
 });
 
-const toggle = () => screen.getByRole("switch", { name: "Film grain" });
+const toggle = () => screen.getByRole("switch", { name: "Filter" });
 
 describe("FilmGrainToggle", () => {
   it("is an accessible switch that shows the current state", () => {
