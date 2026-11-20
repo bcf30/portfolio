@@ -1,7 +1,10 @@
 # Dependencies
 node_modules/
 
-# Next.js
+# SvelteKit / Vercel
+.svelte-kit/
+.vercel/
+# Next.js (pre-migration leftovers)
 .next/
 out/
 

@@ -5,7 +5,7 @@
  * for the scrollbar visualization (20Hz - 20kHz range)
  */
 
-import { frequencyResponseData, FrequencyDataPoint } from "../Models/ProjectViewModel";
+import { frequencyResponseData, type FrequencyDataPoint } from "../Models/ProjectViewModel";
 
 /**
  * Logarithmic frequency boundaries

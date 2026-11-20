@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+:root {
+  --font-noto-sans-mono: "Noto Sans Mono";
+  --font-cormorant: var(--font-noto-sans-mono), monospace;
+  --font-crimson: var(--font-noto-sans-mono), monospace;
+}
+
+/* RAMIRO CHEN - Cinematic Portfolio */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: oklch(0.50 0.10 145 / 0.25);
+  color: inherit;
+}
+
+/* Hide scrollbar */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 1px solid oklch(0.50 0.10 145 / 0.6);
+  outline-offset: 2px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Motion (replaces Framer Motion) ---------- */
+
+/* Text reveals: a plain, short fade. Deliberately no slide, blur or wipe. */
+.fade-in-on-load {
+  animation: fade-in 0.8s ease-out 0.2s both;
+}
+.reveal-on-view {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+.reveal-on-view.is-visible {
+  opacity: 1;
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Interest gallery photos. `translate` is separate from `transform`,
+   so it never overrides an inline transform on the same element. */
+.reveal-image {
+  opacity: 0;
+  filter: blur(6px);
+  translate: 0 15px;
+  transition: opacity 1.2s ease-out, filter 1.2s ease-out, translate 1.2s ease-out;
+}
+.reveal-image.is-visible {
+  opacity: 0.85;
+  filter: blur(0);
+  translate: 0 0;
+}
+
+/* Slow ambient pulse behind the homepage */
+.atmosphere-pulse {
+  animation: atmosphere-pulse 15s ease-in-out infinite;
+}
+@keyframes atmosphere-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.55; }
+}
+
+/* Portal view: overexposed flash settling into the scene */
+.portal-enter {
+  animation: portal-enter 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes portal-enter {
+  from { opacity: 0; filter: brightness(2.5) contrast(1.2); transform: scale(0.98); }
+  to { opacity: 1; filter: brightness(1) contrast(1); transform: scale(1); }
+}
+
+/* Markdown content styling (blog posts) */
+.prose {
+  color: oklch(0.75 0.03 145);
+  font-family: var(--font-crimson), serif;
+  line-height: 1.7;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: oklch(0.80 0.02 145);
+  font-family: var(--font-cormorant), serif;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.prose h1 { font-size: 2rem; }
+.prose h2 { font-size: 1.75rem; }
+.prose h3 { font-size: 1.5rem; }
+.prose p { margin-bottom: 1em; }
+.prose ul, .prose ol { margin-bottom: 1em; padding-left: 1.5em; }
+.prose li { margin-bottom: 0.5em; }
+.prose a { color: oklch(0.55 0.04 145); text-decoration: underline; }
+.prose a:hover { color: oklch(0.65 0.06 145); }
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid oklch(0.30 0.04 145/0.3);
+  margin: 1em 0;
+}
+.prose blockquote {
+  border-left: 3px solid oklch(0.30 0.04 145);
+  padding-left: 1em;
+  font-style: italic;
+  color: oklch(0.60 0.04 145);
+  margin: 1.5em 0;
+}
+.prose code {
+  background: oklch(0.16 0.01 145/0.5);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: monospace;
+}
+.prose pre {
+  background: oklch(0.16 0.01 145/0.7);
+  padding: 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+.prose pre code {
+  background: transparent;
+  padding: 0;
+}
