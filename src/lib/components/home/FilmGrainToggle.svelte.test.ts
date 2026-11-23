@@ -30,6 +30,15 @@ describe("FilmGrainToggle", () => {
     expect(localStorage.getItem("film-grain")).toBe("on");
   });
 
+  it("sits beside the portal door by default, or in the corner when asked", () => {
+    const { unmount } = render(FilmGrainToggle);
+    expect(toggle().className).toContain("left-16");
+    unmount();
+    render(FilmGrainToggle, { props: { placement: "corner" } });
+    expect(toggle().className).toContain("left-6");
+    expect(toggle().className).toContain("bottom-6");
+  });
+
   it("still toggles when the browser blocks storage", async () => {
     vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
       throw new Error("blocked");

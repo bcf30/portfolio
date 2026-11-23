@@ -89,6 +89,9 @@
   <FrequencyScrollbar {mounted} {freqState} onScrollTo={scrollToProgress} />
   <NavigationHeader {container} />
   <AtmosphericEffects />
+  <!-- Fades the first screen into the page colour. Kept outside <main> (z-30) so it stays
+       below the film grain (z-5); inside <main> it would hide the grain at the hero's bottom. -->
+  <div class="absolute inset-x-0 top-0 h-screen pointer-events-none" style="background: linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))"></div>
 
   <main class="relative z-30 pr-16 lg:pr-20">
     <HeroSection />

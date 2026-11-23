@@ -41,10 +41,13 @@ describe("homepage content", () => {
     expect(link.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
-  it("credits Apichatpong Weerasethakul in the footer, with no quote left over", () => {
+  it("credits Apichatpong Weerasethakul, then lists the tech stack, in the footer", () => {
     render(HomePage);
-    const footer = document.querySelector("footer")!;
-    expect(footer.textContent?.trim()).toBe("Site design is inspired by the films of Apichatpong Weerasethakul.");
+    const lines = [...document.querySelectorAll("footer p")].map((p) => p.textContent?.trim());
+    expect(lines).toEqual([
+      "Site design is inspired by the films of Apichatpong Weerasethakul.",
+      "Built with Svelte, SvelteKit, Tailwind CSS and TypeScript. Hosted on Vercel, with Vercel Postgres and Vercel Blob.",
+    ]);
   });
 
   it("offers email and GitHub as contact links, and no resume", () => {
