@@ -6,7 +6,7 @@
   <div class="max-w-3xl mx-auto">
     <div class="relative z-10 overflow-hidden reveal-on-view" use:revealOnView>
       <div class="flex items-center gap-6">
-        <p class="font-[family-name:var(--font-crimson)] text-base md:text-lg leading-relaxed text-[oklch(0.75_0.03_145)]">I'm Ramiro. I have a lot of interests. This portfolio site shows just some of them. Well, at least, the most notable ones I can think of.</p>
+        <p class="font-[family-name:var(--font-crimson)] text-base md:text-lg leading-relaxed text-[oklch(0.75_0.03_145)]">I'm Ramiro. I have a lot of interests. This portfolio site shows just some of them. Well, at least, the most notable ones I can think of. Based in Toronto, Ontario.</p>
         <img
           src="/images/buffalo.avif"
           alt=""
