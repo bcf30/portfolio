@@ -6,7 +6,7 @@
   const post = $derived(data.post);
 </script>
 
-<div class="min-h-screen bg-[oklch(0.16_0.01_145)] py-24 px-6">
+<div class="min-h-screen py-24 px-6 relative z-10">
   <div class="max-w-3xl mx-auto">
     <a href="/blog" style="border-color: oklch(0.30 0.04 145 / 0.5); color: oklch(0.75 0.03 145)" class="inline-block mb-6 px-3 py-1 border text-xs font-mono hover:opacity-80 transition-all">
       &larr; Back to Blog

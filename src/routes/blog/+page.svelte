@@ -5,7 +5,7 @@
   let { data }: PageProps = $props();
 </script>
 
-<div class="min-h-screen bg-[oklch(0.16_0.01_145)] py-24 px-6 relative">
+<div class="min-h-screen py-24 px-6 relative z-10">
   <header class="absolute top-0 left-0 z-40 p-3 flex gap-2">
     <a href="/" style="border-color: oklch(0.50 0.04 145); color: oklch(0.75 0.03 145)" class="px-3 py-1.5 border text-xs font-mono hover:opacity-80 transition-all bg-[oklch(0.16_0.01_145)]">
       &larr; home

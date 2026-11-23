@@ -48,8 +48,21 @@ describe("FilmEffect drawing", () => {
     expect(count).toBeLessThanOrEqual(46); // 45 specks plus the occasional static line
   });
 
-  it.each(["/blog", "/blog/some-post", "/admin/blog"])("is hidden on %s", (path) => {
+  it("sits below page content (z-5), not on top of it", () => {
+    const { container } = render(FilmEffect);
+    const overlay = container.querySelector("div")!;
+    expect(overlay.className).toContain("z-[5]");
+    expect(overlay.className).not.toContain("z-[9999]");
+  });
+
+  it.each(["/", "/blog", "/blog/some-post"])("is shown on %s", (path) => {
     state.page.url = new URL(`http://localhost${path}`);
+    const { container } = render(FilmEffect);
+    expect(container.querySelector("svg")).not.toBeNull();
+  });
+
+  it("is hidden on the admin editor", () => {
+    state.page.url = new URL("http://localhost/admin/blog");
     const { container } = render(FilmEffect);
     expect(container.querySelector("svg")).toBeNull();
   });
@@ -122,8 +135,8 @@ describe("turning the filter off and on", () => {
     expect(frameSignature(container)).not.toBe(frame);
   });
 
-  it("doesn't run a timer on the blog, where it's hidden anyway", () => {
-    state.page.url = new URL("http://localhost/blog");
+  it("doesn't run a timer on the admin editor, where it's hidden", () => {
+    state.page.url = new URL("http://localhost/admin/blog");
     const intervals = watchIntervals();
     render(FilmEffect);
     expect(intervals.setInterval).not.toHaveBeenCalled();

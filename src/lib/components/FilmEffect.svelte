@@ -7,8 +7,9 @@
   // Starts empty so the server-rendered HTML matches; specks appear once the browser takes over
   let frame = $state<FilmFrame>(EMPTY_FRAME);
 
-  const onBlog = $derived(page.url.pathname.startsWith("/blog") || page.url.pathname.startsWith("/admin/blog"));
-  const visible = $derived(filmGrain.enabled && !onBlog);
+  // Shown on the public pages (home and blog); the admin editor stays plain
+  const onAdmin = $derived(page.url.pathname.startsWith("/admin"));
+  const visible = $derived(filmGrain.enabled && !onAdmin);
 
   onMount(loadFilmGrainPreference);
 
@@ -23,7 +24,12 @@
 </script>
 
 {#if visible}
-  <div class="pointer-events-none fixed inset-0 z-[9999] overflow-hidden mix-blend-screen" aria-hidden="true">
+  <!--
+    z-5 puts the grain above page backgrounds (which have no z-index) and below content.
+    Anything that should cover the grain needs z-10 or higher: home's <main> is z-30, its
+    buttons z-40/50, and blog pages wrap their content in a z-10 layer with no background.
+  -->
+  <div class="pointer-events-none fixed inset-0 z-[5] overflow-hidden mix-blend-screen" aria-hidden="true">
     <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
       {#each frame.specks as speck, index (index)}
         <rect

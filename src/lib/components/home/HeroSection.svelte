@@ -1,5 +1,5 @@
+<!-- The fade-out gradient behind this section lives in +page.svelte, below the film grain layer -->
 <section class="min-h-screen flex items-center justify-center relative px-6">
-  <div class="absolute inset-0 -z-10" style="background: linear-gradient(to bottom, transparent, oklch(0.16 0.01 145))"></div>
   <div class="text-center max-w-2xl relative z-10">
     <div class="relative inline-block overflow-hidden fade-in-on-load">
       <h1 class="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl font-light tracking-wide text-[oklch(0.95_0.02_145)]">
