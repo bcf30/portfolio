@@ -45,6 +45,7 @@
           <li>- environment</li>
           <li>- the sciences</li>
           <li>- triathlon</li>
+          <li>- alternative proteins</li>
           <li>- (and more)</li>
         </ul>
       </div>

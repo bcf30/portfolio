@@ -60,6 +60,13 @@ describe("homepage content", () => {
     expect(document.body.innerHTML).not.toContain("docs.google.com");
   });
 
+  it("lists alternative proteins among the interests, before '(and more)'", () => {
+    render(HomePage);
+    const interests = [...document.querySelectorAll("section ul li")].map((li) => li.textContent?.trim());
+    expect(interests.at(-2)).toBe("- alternative proteins");
+    expect(interests.at(-1)).toBe("- (and more)");
+  });
+
   it("hides the GitHub icon only for the E-Bike Battery card", () => {
     render(HomePage);
     expect(screen.getByRole("link", { name: /E-Bike Battery/ }).querySelector("svg")).toBeNull();
